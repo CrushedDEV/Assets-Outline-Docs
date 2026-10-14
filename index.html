@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Easy Outline · Documentación</title>
+  <meta name="description" content="Documentación de Easy Outline para Unity URP: contornos, brillos, rellenos y detección de bordes. Guías paso a paso, referencia de componentes y API.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("eo-theme"); } catch (e) {}
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#content">Saltar al contenido</a>
+
+  <header class="header">
+    <button id="menu-toggle" class="icon-btn menu-btn" type="button" aria-label="Abrir el índice" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a class="brand" href="#/bienvenida">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="3.5" y="3.5" width="25" height="25" rx="8" fill="none" stroke="#f07a12" stroke-width="3"/>
+        <rect x="10" y="10" width="12" height="12" rx="3.5" fill="currentColor"/>
+      </svg>
+      <span class="name">Easy Outline</span>
+      <span class="version">v1.0.0</span>
+    </a>
+    <div class="header-spacer"></div>
+    <button id="search-open" class="search-trigger" type="button" aria-label="Buscar en la documentación">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span>Buscar…</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+    <button id="theme-toggle" class="icon-btn" type="button" aria-label="Cambiar entre tema claro y oscuro">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+    </button>
+  </header>
+
+  <div class="layout">
+    <nav id="sidebar" class="sidebar" aria-label="Índice de la documentación">
+      <div id="nav"></div>
+    </nav>
+
+    <main class="main" id="content">
+      <div class="page">
+        <div class="breadcrumb" id="breadcrumb"></div>
+
+<!-- =================================================================================== EMPEZAR -->
+
+<article data-page="bienvenida" data-title="¡Bienvenido!" data-group="Empezar" data-keywords="introducción inicio qué es easy outline urp">
+  <h1>¡Bienvenido a Easy Outline!</h1>
+  <p class="lead">La forma <mark>más fácil</mark> de añadir <mark>contornos</mark>, <mark>brillos</mark>, <mark>rellenos</mark> y <mark>detección de bordes</mark> a tus juegos en el Universal Render Pipeline. Se configura sin código y, si lo necesitas, también desde código.</p>
+
+  <div class="hero"><img src="assets/img/demo-hero.webp" width="1600" height="900" alt="Escena Demo de Easy Outline: doce expositores con distintos contornos, brillos y rellenos"></div>
+
+  <div class="badges">
+    <span class="badge ok">Unity 6 · URP 17</span>
+    <span class="badge ok">Unity 2022.3 LTS · URP 14</span>
+    <span class="badge">PC · Consolas · Móvil · WebGL</span>
+    <span class="badge">Sin dependencias</span>
+  </div>
+
+  <h2>¿Qué me ofrece Easy Outline?</h2>
+  <ol class="feature-list">
+    <li><mark>Fácil de usar:</mark> añade un componente a un objeto y listo. Todo se ve también en <strong>modo edición</strong>, sin pulsar Play.</li>
+    <li><mark>Cuatro estilos en uno:</mark> contornos finos (<strong>Fast</strong>), brillos suaves (<strong>Soft</strong>), contornos gruesos y uniformes (<strong>Wide</strong>) y <strong>rellenos</strong> con patrones.</li>
+    <li><mark>Ver a través de paredes:</mark> muestra objetos ocultos con contorno o relleno, al estilo rayos X.</li>
+    <li><mark>Estilo cómic o dibujado a mano:</mark> detección de bordes a pantalla completa, con líneas que “tiemblan” como en un dibujo.</li>
+    <li><mark>Pensado para el rendimiento:</mark> los objetos se agrupan por estilo y miles de objetos pueden contornearse <strong>sin componentes</strong>, por Rendering Layers.</li>
+    <li><mark>Funciona con todo:</mark> mallas animadas, hojas con recorte alfa, animación en el vertex shader, Shader Graph y GPU Resident Drawer.</li>
+    <li><mark>Estilos reutilizables:</mark> crea un perfil una vez (“Selección”, “Enemigo”, “Objeto recogible”…) y úsalo en todo el proyecto.</li>
+  </ol>
+
+  <h2>¿Qué tipo de efecto puedo añadir?</h2>
+  <div class="cards">
+    <a class="card image" href="#/contorno-fast"><img src="assets/img/exhibit-01.webp" loading="lazy" alt="Contorno Fast amarillo"><span class="card-body"><strong>FAST · Contorno fino</strong><span>El más barato. Ideal para muchos objetos y móviles.</span></span></a>
+    <a class="card image" href="#/brillo-soft"><img src="assets/img/exhibit-02.webp" loading="lazy" alt="Brillo Soft cian"><span class="card-body"><strong>SOFT · Brillo</strong><span>Halo difuminado que brilla con Bloom.</span></span></a>
+    <a class="card image" href="#/contorno-wide"><img src="assets/img/exhibit-03.webp" loading="lazy" alt="Contornos Wide en piezas de ajedrez"><span class="card-body"><strong>WIDE · Contorno grueso</strong><span>Grosor exacto y uniforme, hasta 128 px.</span></span></a>
+    <a class="card image" href="#/rellenos"><img src="assets/img/exhibit-04.webp" loading="lazy" alt="Rellenos de rayas, puntos y textura"><span class="card-body"><strong>FILL · Relleno</strong><span>Color, rayas, puntos, damero o tu propia textura.</span></span></a>
+  </div>
+
+  <h2>¿Por dónde empiezo?</h2>
+  <div class="cards three">
+    <a class="card" href="#/instalacion"><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg><strong>Instalación</strong><span>Añade el paquete y configura los renderers con un clic.</span></a>
+    <a class="card" href="#/primer-contorno"><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><strong>Tu primer contorno</strong><span>De cero a contorno en menos de cinco minutos.</span></a>
+    <a class="card" href="#/escena-demo"><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3V9Z"/></svg><strong>La escena Demo</strong><span>Doce ejemplos listos para mirar y copiar.</span></a>
+  </div>
+
+  <div class="hint info"><p>¿Buscas algo concreto? Pulsa <kbd>Ctrl</kbd> <kbd>K</kbd> (o <kbd>/</kbd>) para buscar en toda la documentación.</p></div>
+</article>
+
+<article data-page="instalacion" data-title="Instalación" data-group="Empezar" data-keywords="instalar paquete package manager requisitos set up renderers">
+  <h1>Instalación</h1>
+  <p class="lead">Añade el paquete al proyecto y deja que Easy Outline configure tus renderers. Son dos pasos.</p>
+
+  <h2>Requisitos</h2>
+  <ul>
+    <li>Unity <strong>6000.0 o superior</strong> con URP 17, o Unity <strong>2022.3 LTS</strong> con URP 14.0.8 o superior.</li>
+    <li>El <strong>Universal Renderer</strong> (el Renderer 2D no tiene textura de profundidad).</li>
+    <li>En Unity 6, <strong>Render Graph activado</strong> (es la opción por defecto).</li>
+  </ul>
+
+  <h2><span class="step">Paso 1 · Añade el paquete</span></h2>
+  <div class="tabs">
+    <div class="tab-panel" data-tab="Asset Store">
+      <ol>
+        <li>Abre <span class="path">Window › Package Manager</span>.</li>
+        <li>Elige <strong>My Assets</strong>, busca <strong>Easy Outline</strong> y pulsa <strong>Download</strong> y después <strong>Import</strong>.</li>
+      </ol>
+    </div>
+    <div class="tab-panel" data-tab="Desde disco">
+      <p><span class="path">Window › Package Manager › + › Add package from disk…</span> y selecciona el archivo <code>package.json</code> del paquete.</p>
+    </div>
+    <div class="tab-panel" data-tab="Desde Git">
+      <p><span class="path">Window › Package Manager › + › Add package from git URL…</span> y pega la URL del repositorio. Si el paquete está dentro de un proyecto, añade la ruta al final:</p>
+      <pre><code data-lang="text">https://github.com/USUARIO/REPOSITORIO.git?path=/Packages/com.easyoutline.urp</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="Embebido">
+      <p>Copia la carpeta <code>com.easyoutline.urp</code> dentro de la carpeta <code>Packages/</code> de tu proyecto. Unity la detecta al volver al Editor.</p>
+    </div>
+  </div>
+
+  <h2><span class="step">Paso 2 · Configura los renderers</span></h2>
+  <p>Ejecuta <span class="path">Tools › Easy Outline › Set Up Renderers</span>. Easy Outline busca los <em>Universal Renderer Data</em> de tu proyecto (el del pipeline por defecto y los de cada nivel de calidad) y les añade el renderer feature.</p>
+  <div class="hint success"><p>¡Listo! Ya puedes <a href="#/primer-contorno">añadir tu primer contorno</a>.</p></div>
+  <div class="hint info"><p>Si se te olvida este paso, el Inspector de <strong>Outline Object</strong> te avisa y muestra un botón <strong>Set Up</strong>. También puedes añadirlo a mano: selecciona tu renderer y pulsa <span class="path">Add Renderer Feature › Easy Outline</span>.</p></div>
+
+  <h2>Importar las muestras (opcional)</h2>
+  <p>En <span class="path">Package Manager › Easy Outline › Samples</span> encontrarás:</p>
+  <ul>
+    <li><strong>Demo</strong>: una sala con 12 expositores, uno por función. Ver <a href="#/escena-demo">La escena Demo</a>.</li>
+    <li><strong>Scripting Examples</strong>: scripts cortos que usan la API.</li>
+  </ul>
+
+  <h2>Ejecutar los tests (opcional)</h2>
+  <p>Añade el paquete a <code>testables</code> en <code>Packages/manifest.json</code> y abre <span class="path">Window › General › Test Runner</span>:</p>
+  <pre><code data-lang="json" data-title="Packages/manifest.json">"testables": [ "com.easyoutline.urp" ]</code></pre>
+</article>
+
+<article data-page="primer-contorno" data-title="Tu primer contorno" data-group="Empezar" data-keywords="quickstart inicio rápido empezar primer contorno tutorial">
+  <h1>Tu primer contorno</h1>
+  <p class="lead">Esta guía es para tus <mark>primeros cinco minutos</mark> con Easy Outline. Al terminar tendrás un objeto contorneado y un estilo propio que podrás reutilizar.</p>
+
+  <div class="hint info"><p>Antes de empezar, asegúrate de haber hecho la <a href="#/instalacion">instalación</a> (sobre todo <span class="path">Tools › Easy Outline › Set Up Renderers</span>).</p></div>
+
+  <p><mark>Dos formas de trabajar, tú eliges.</mark> Puedes contornear objetos con un <strong>componente</strong> (lo más fácil) o <strong>sin componentes</strong>, marcándolos con una Rendering Layer (lo más eficiente para muchos objetos). Ninguna es “más avanzada”: usan el mismo sistema y puedes mezclarlas.</p>
+
+  <hr>
+
+  <h2><span class="step">Paso 1 · Contornea un objeto</span></h2>
+  <div class="tabs">
+    <div class="tab-panel" data-tab="Con componente">
+      <ol>
+        <li>Selecciona uno o varios objetos en la jerarquía.</li>
+        <li>Haz clic derecho y elige <span class="path">Easy Outline › Add Outline To Selection</span> (también en el menú <span class="path">GameObject</span>).</li>
+      </ol>
+      <p>Verás al momento un contorno naranja de 4 píxeles, también en la vista Scene. Es el perfil por defecto.</p>
+    </div>
+    <div class="tab-panel" data-tab="Sin componentes">
+      <ol>
+        <li>En el <strong>Mesh Renderer</strong> del objeto, abre <strong>Rendering Layer Mask</strong> y activa una capa extra (por ejemplo la 8). Deja también <em>Default</em>.</li>
+        <li>Selecciona tu <em>Universal Renderer Data</em>, despliega <strong>Easy Outline</strong> y pulsa <strong>+</strong> en <strong>Outline Layers</strong>.</li>
+        <li>En la nueva capa, elige esa Rendering Layer y pulsa <strong>New</strong> junto a <em>Profile</em>.</li>
+      </ol>
+      <p>Todos los objetos con esa Rendering Layer se contornean a la vez. Más detalles en <a href="#/sin-componentes">Muchos objetos sin componentes</a>.</p>
+    </div>
+  </div>
+
+  <h2><span class="step">Paso 2 · Crea tu propio estilo</span></h2>
+  <p>El aspecto de un contorno lo define un <mark>Outline Profile</mark>: un asset con la técnica, el color, el grosor y el resto de ajustes.</p>
+  <ol class="steps">
+    <li><strong>Crea el perfil</strong>En el componente <em>Outline Object</em>, pulsa <strong>New</strong> junto a <em>Profile</em> y elige dónde guardarlo.</li>
+    <li><strong>Elige la técnica</strong><em>Fast</em> (fino y barato), <em>Soft</em> (brillo), <em>Wide</em> (grueso y uniforme) o <em>None</em> (solo relleno). ¿Dudas? Mira <a href="#/elegir-tecnica">¿Qué técnica elijo?</a></li>
+    <li><strong>Ajusta color y grosor</strong>Despliega <em>Profile Settings</em> en el propio componente: los cambios se ven al instante.</li>
+  </ol>
+  <div class="hint warning"><p>Los perfiles son <strong>compartidos</strong>: si cambias uno, cambian todos los objetos que lo usan. Para variar un solo objeto usa los <strong>overrides</strong> del paso 3.</p></div>
+
+  <h2><span class="step">Paso 3 · Cambia un solo objeto</span></h2>
+  <p>En <em>Outline Object</em>, activa la casilla de <strong>Color</strong>, <strong>Width</strong> u <strong>Opacity</strong> y ponle otro valor. Solo afecta a ese objeto; el resto sigue usando el perfil.</p>
+
+  <h2><span class="step">Paso 4 · Actívalo desde el juego</span></h2>
+  <div class="tabs">
+    <div class="tab-panel" data-tab="Con código">
+      <p>Añade <code>using EasyOutline;</code> y llama a <code>OutlineObject.Add</code>:</p>
+<pre><code data-lang="cs">using EasyOutline;
+using UnityEngine;
+
+public class Pickup : MonoBehaviour
+{
+    public OutlineProfile highlight;
+
+    void OnMouseEnter() => OutlineObject.Add(gameObject, highlight);
+    void OnMouseExit()  => OutlineObject.RemoveAll(gameObject);
+}</code></pre>
+      <p>¿Qué está pasando? <code>Add</code> añade un componente <em>Outline Object</em> (o reutiliza el que ya tenga) con ese perfil, y <code>RemoveAll</code> lo quita. Para encender y apagar sin crear componentes, usa <code>Show()</code> y <code>Hide()</code>.</p>
+    </div>
+    <div class="tab-panel" data-tab="Sin código">
+      <p>Un contorno es un componente: actívalo o desactívalo como cualquier otro. Por ejemplo, desde un <strong>UnityEvent</strong> de un botón o de un trigger, arrastra el objeto y elige <span class="path">OutlineObject › enabled</span>.</p>
+      <p>Para resaltar con el ratón sin escribir nada, usa el script <code>OutlineHighlighter</code> de la escena Demo. Ver <a href="#/raton">Resaltar y seleccionar con el ratón</a>.</p>
+    </div>
+  </div>
+
+  <div class="hint success"><p>¡Ya está! A partir de aquí, las <strong>Guías</strong> del índice explican cada efecto paso a paso.</p></div>
+</article>
+
+<article data-page="escena-demo" data-title="La escena Demo" data-group="Empezar" data-keywords="demo ejemplo muestra sample escena controles teclado visita guiada expositores">
+  <h1>La escena Demo</h1>
+  <p class="lead">Una sala de exposición con <mark>12 expositores numerados</mark>, uno por función. Cada uno tiene una placa que explica qué muestra y dónde mirar. <mark>No hace falta pulsar Play</mark>: todo se ve en la vista Scene.</p>
+
+  <figure><img src="assets/img/demo-angle.webp" width="1280" height="720" loading="lazy" alt="Vista en ángulo de la sala de exposición"><figcaption>Cada placa indica la función, una frase y el ajuste clave que hay que mirar.</figcaption></figure>
+
+  <h2><span class="step">Abrirla</span></h2>
+  <ol class="steps">
+    <li><strong>Importa la muestra</strong><span class="path">Package Manager › Easy Outline › Samples › Demo › Import</span>.</li>
+    <li><strong>Abre la escena</strong><code>Assets/Samples/Easy Outline/…/Demo/Scenes/Easy Outline Demo</code>.</li>
+    <li><strong>Explora</strong>La vista Scene se coloca sola frente a los expositores y se selecciona el objeto <strong>Easy Outline Demo</strong>. Su Inspector tiene un botón por expositor para encuadrarlo.</li>
+  </ol>
+
+  <h2>Los 12 expositores</h2>
+  <table>
+    <thead><tr><th>#</th><th>Expositor</th><th>Qué muestra</th><th>Guía</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td>Fast</td><td class="wrap">Contorno de grosor constante en objetos de distinto tamaño</td><td><a href="#/contorno-fast">Fast</a></td></tr>
+      <tr><td>02</td><td>Soft Glow</td><td class="wrap">Brillo aditivo HDR con Bloom</td><td><a href="#/brillo-soft">Soft</a></td></tr>
+      <tr><td>03</td><td>Wide</td><td class="wrap">Un perfil, color y grosor distintos por pieza</td><td><a href="#/contorno-wide">Wide</a></td></tr>
+      <tr><td>04</td><td>Surface Fill</td><td class="wrap">Rayas, puntos y textura</td><td><a href="#/rellenos">Rellenos</a></td></tr>
+      <tr><td>05</td><td>X-Ray</td><td class="wrap">Un robot visible a través de la pared</td><td><a href="#/rayos-x">Rayos X</a></td></tr>
+      <tr><td>06</td><td>Stacking</td><td class="wrap">Brillo + contorno + relleno en el mismo objeto</td><td><a href="#/combinar">Combinar</a></td></tr>
+      <tr><td>07</td><td>Rendering Layers</td><td class="wrap">Cajas y barril sin ningún componente</td><td><a href="#/sin-componentes">Sin componentes</a></td></tr>
+      <tr><td>08</td><td>Hover &amp; Select</td><td class="wrap">Resaltado y selección con el ratón</td><td><a href="#/raton">Ratón</a></td></tr>
+      <tr><td>09</td><td>Alpha Cutout</td><td class="wrap">Un árbol cuyas hojas tienen recorte alfa</td><td><a href="#/recortes">Recortes</a></td></tr>
+      <tr><td>10</td><td>Vertex Animation</td><td class="wrap">Una gelatina deformada por su shader</td><td><a href="#/animados">Animados</a></td></tr>
+      <tr><td>11</td><td>Edge Detection</td><td class="wrap">Líneas dibujadas a mano solo en este expositor</td><td><a href="#/bordes">Bordes</a></td></tr>
+      <tr><td>12</td><td>Runtime API</td><td class="wrap">Color y grosor animados desde código</td><td><a href="#/api-outline-object">API</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Controles en Play</h2>
+  <table>
+    <thead><tr><th>Control</th><th>Acción</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd> · <kbd>Tab</kbd></td><td class="wrap">Visita guiada: la cámara vuela al expositor anterior o siguiente</td></tr>
+      <tr><td><kbd>Space</kbd> · <kbd>Esc</kbd></td><td>Vista general</td></tr>
+      <tr><td>Ratón encima · clic</td><td>Resaltar · seleccionar</td></tr>
+      <tr><td>Botón derecho · central · rueda</td><td>Orbitar · desplazar · zoom</td></tr>
+      <tr><td><kbd>E</kbd></td><td>Detección de bordes: Exhibit, Clean, Hand Drawn, Off</td></tr>
+      <tr><td><kbd>V</kbd></td><td>Recorrer las <a href="#/depuracion">vistas de depuración</a></td></tr>
+      <tr><td><kbd>L</kbd></td><td>Encender o apagar las capas del expositor 07</td></tr>
+      <tr><td><kbd>H</kbd></td><td>Ocultar la barra de ayuda</td></tr>
+    </tbody>
+  </table>
+  <figure><img src="assets/img/demo-edges.webp" width="1280" height="720" loading="lazy" alt="La sala con detección de bordes dibujada a mano en toda la escena"><figcaption>Con <kbd>E</kbd> la detección de bordes pasa a toda la escena.</figcaption></figure>
+
+  <div class="hint info"><p>La escena <strong>no modifica tus renderers</strong>: sus capas y su detección de bordes viven en un componente <a href="#/scene-settings">Outline Scene Settings</a>. Para ver el Bloom, tu renderer debe tener el post-procesado activo y la cámara HDR.</p></div>
+</article>
+
+<article data-page="conceptos" data-title="Conceptos básicos" data-group="Empezar" data-keywords="conceptos piezas perfil feature capa grupo">
+  <h1>Conceptos básicos</h1>
+  <p class="lead">Easy Outline tiene pocas piezas. Con entender estas cinco ya puedes hacer cualquier cosa.</p>
+
+  <table>
+    <thead><tr><th>Pieza</th><th>Qué es</th><th>Dónde está</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#/feature">Easy Outline Feature</a></td><td class="wrap">El renderer feature que lo dibuja todo. Se añade una vez por renderer.</td><td>Universal Renderer Data</td></tr>
+      <tr><td><a href="#/outline-profile">Outline Profile</a></td><td class="wrap">Un <strong>estilo</strong> reutilizable: técnica, color, grosor, oclusión y relleno.</td><td>Asset</td></tr>
+      <tr><td><a href="#/outline-object">Outline Object</a></td><td class="wrap">Componente para contornear <strong>un objeto</strong> concreto.</td><td>GameObject</td></tr>
+      <tr><td>Outline Layer</td><td class="wrap">Regla “los objetos con esta Rendering Layer usan este perfil”. Para <strong>muchos objetos</strong> sin componentes.</td><td>Feature o Scene Settings</td></tr>
+      <tr><td><a href="#/edge-profile">Edge Detection Profile</a></td><td class="wrap">Ajustes de las líneas a pantalla completa (estilo cómic).</td><td>Asset</td></tr>
+    </tbody>
+  </table>
+  <p>Y dos opcionales: <a href="#/outline-camera">Outline Camera</a> (ajustes por cámara) y <a href="#/scene-settings">Outline Scene Settings</a> (ajustes por escena).</p>
+
+  <h2>Grupos: por qué conviene reutilizar perfiles</h2>
+  <p>Los objetos que comparten perfil se dibujan <mark>juntos, como un grupo</mark>. El coste de las pasadas a pantalla completa depende del <strong>número de perfiles visibles</strong>, no del número de objetos.</p>
+  <div class="hint success"><p>Usa pocos perfiles bien elegidos (“Hover”, “Selección”, “Enemigo”…) en lugar de uno por objeto. Para variaciones puntuales, usa los overrides de <em>Outline Object</em>.</p></div>
+</article>
+
+<!-- =================================================================================== GUÍAS -->
+
+<article data-page="elegir-tecnica" data-title="¿Qué técnica elijo?" data-group="Guías" data-keywords="comparativa técnicas fast soft wide fill diferencias coste">
+  <h1>¿Qué técnica elijo?</h1>
+  <p class="lead">Cada perfil usa una técnica. Esta tabla te ayuda a elegir en segundos.</p>
+
+  <table>
+    <thead><tr><th>Quiero…</th><th>Usa</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Muchos objetos, móviles o contornos finos</td><td><span class="tag">Fast</span></td><td class="wrap">Sin pasadas a pantalla completa: el más barato.</td></tr>
+      <tr><td class="wrap">Un halo o brillo suave</td><td><span class="tag">Soft</span></td><td class="wrap">Silueta difuminada; con HDR y Bloom parece neón.</td></tr>
+      <tr><td class="wrap">Un contorno grueso y perfecto</td><td><span class="tag">Wide</span></td><td class="wrap">Grosor exacto hasta 128 px, esquinas redondeadas.</td></tr>
+      <tr><td class="wrap">Pintar el interior del objeto</td><td><span class="tag">Fill</span></td><td class="wrap">Se suma a cualquier técnica, o va solo con <em>None</em>.</td></tr>
+      <tr><td class="wrap">Líneas en toda la escena (cómic)</td><td><span class="tag">Edges</span></td><td class="wrap">Efecto a pantalla completa, no por objeto.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Compáralas</h2>
+  <div class="tabs">
+    <div class="tab-panel" data-tab="Fast"><figure><img src="assets/img/exhibit-01.webp" loading="lazy" alt="Fast"><figcaption>Fast: el mismo grosor en píxeles en objetos grandes y pequeños.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Soft"><figure><img src="assets/img/exhibit-02.webp" loading="lazy" alt="Soft"><figcaption>Soft aditivo con Bloom.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Wide"><figure><img src="assets/img/exhibit-03.webp" loading="lazy" alt="Wide"><figcaption>Wide: color y grosor distintos por pieza.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Fill"><figure><img src="assets/img/exhibit-04.webp" loading="lazy" alt="Fill"><figcaption>Rellenos de rayas, puntos y textura.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Edges"><figure><img src="assets/img/exhibit-11.webp" loading="lazy" alt="Edges"><figcaption>Detección de bordes dibujada a mano.</figcaption></figure></div>
+  </div>
+
+  <h2>Detalle técnico</h2>
+  <table>
+    <thead><tr><th>Técnica</th><th>Cómo funciona</th><th>Coste</th><th>Ajustable por objeto</th></tr></thead>
+    <tbody>
+      <tr><td>Fast</td><td class="wrap">Extrusión de vértices + stencil</td><td class="wrap">2 draws por objeto</td><td class="wrap">color, grosor, opacidad</td></tr>
+      <tr><td>Soft</td><td class="wrap">Máscara + blur separable</td><td class="wrap">1 draw/objeto + 3 a pantalla completa</td><td class="wrap">color, opacidad</td></tr>
+      <tr><td>Wide</td><td class="wrap">Máscara + Jump Flood</td><td class="wrap">1 draw/objeto + 2 + log₂(grosor)</td><td class="wrap">color, grosor, opacidad</td></tr>
+      <tr><td>Fill</td><td class="wrap">Máscara + patrón en pantalla</td><td class="wrap">+1 a pantalla completa</td><td class="wrap">opacidad, color opcional</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article data-page="contorno-fast" data-title="Contornos finos (Fast)" data-group="Guías" data-keywords="fast extrusión normales suavizadas huecos móvil barato">
+  <h1>Contornos finos y baratos <span class="tag">Fast</span></h1>
+  <p class="lead">La técnica más rápida: <mark>sin texturas intermedias</mark> ni pasadas a pantalla completa. Perfecta para muchos objetos, móviles y contornos de pocos píxeles.</p>
+  <figure><img src="assets/img/exhibit-01.webp" loading="lazy" alt="Expositor 01: gema, cubo y esfera con contorno Fast amarillo"><figcaption>Expositor 01 de la Demo: el grosor en píxeles es el mismo en los tres objetos.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Crea un perfil</strong><span class="path">Assets › Create › Easy Outline › Outline Profile</span> y pon <em>Technique</em> en <strong>Fast</strong>.</li>
+    <li><strong>Elige el espacio del grosor</strong><em>Width Space</em>: <strong>Screen Pixels</strong> (igual de grueso a cualquier distancia) o <strong>World Units</strong> (más fino al alejarse).</li>
+    <li><strong>Asígnalo</strong>A un <em>Outline Object</em> o a una <em>Outline Layer</em>.</li>
+  </ol>
+
+  <h2>Esquinas abiertas: normales suavizadas</h2>
+  <p>Fast “infla” el objeto a lo largo de sus normales. En mallas con aristas duras (cubos, low-poly) las caras se separan y el contorno se abre en las esquinas. La solución son las <mark>normales suavizadas</mark>:</p>
+  <table>
+    <thead><tr><th>Opción</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Automático (por defecto)</td><td class="wrap"><em>Outline Object</em> las genera para mallas con <em>Read/Write</em> activado.</td></tr>
+      <tr><td class="wrap"><span class="path">Tools › Easy Outline › Bake Smoothed Normals For Selection</span></td><td class="wrap">Mallas sin Read/Write, skinned o contorneadas por capas.</td></tr>
+      <tr><td class="wrap"><span class="path">Assets › Easy Outline › Toggle Smoothed Normals On Import</span></td><td class="wrap">Que se bakeen cada vez que se importa el modelo.</td></tr>
+    </tbody>
+  </table>
+  <div class="hint warning"><p>Las normales suavizadas se guardan en el canal <strong>UV3</strong>. Si tu malla usa UV3 para otra cosa, desactiva <em>Smooth Normals</em> en el perfil.</p></div>
+
+  <h2>Limitaciones</h2>
+  <ul>
+    <li>No sigue la animación hecha en el vertex shader (sí el skinning y los blend shapes). Para eso usa <a href="#/animados">Wide o Soft con Object Depth Pass</a>.</li>
+    <li>Usa el bit 3 del stencil de la cámara.</li>
+  </ul>
+</article>
+
+<article data-page="brillo-soft" data-title="Brillo y glow (Soft)" data-group="Guías" data-keywords="soft glow brillo halo bloom hdr neón blur aditivo">
+  <h1>Brillo y glow <span class="tag">Soft</span></h1>
+  <p class="lead">Un halo suave alrededor del objeto. Con <mark>color HDR</mark>, modo <mark>Additive</mark> y <mark>Bloom</mark> parece luz de neón.</p>
+  <figure><img src="assets/img/exhibit-02.webp" loading="lazy" alt="Expositor 02: poción con brillo cian"><figcaption>Expositor 02: Soft aditivo con Bloom y opacidad pulsante.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Técnica Soft</strong>En el perfil, <em>Technique</em> = <strong>Soft</strong>.</li>
+    <li><strong>Radio</strong><em>Width</em> es el radio del brillo en píxeles (prueba entre 24 y 64).</li>
+    <li><strong>Modo aditivo</strong><em>Blend</em> = <strong>Additive</strong> para sumar luz en lugar de pintar encima.</li>
+    <li><strong>Más intensidad</strong>Sube <em>Brightness</em> por encima de 1 (o usa un color HDR) para que el Bloom lo recoja.</li>
+  </ol>
+
+  <h2>Ajustes útiles</h2>
+  <table>
+    <thead><tr><th>Ajuste</th><th>Efecto</th></tr></thead>
+    <tbody>
+      <tr><td>Intensity</td><td class="wrap">Hace que el brillo llegue más lejos.</td></tr>
+      <tr><td>Hardness</td><td class="wrap">0 = degradado suave, 1 = borde duro.</td></tr>
+      <tr><td>Resolution</td><td class="wrap"><em>Half</em> o <em>Quarter</em>: casi idénticos para brillos y mucho más baratos.</td></tr>
+      <tr><td>Draw Inside</td><td class="wrap">Dibuja el brillo también sobre el objeto.</td></tr>
+    </tbody>
+  </table>
+  <div class="hint info"><p>¿No ves el Bloom? Comprueba que la cámara tiene <strong>Post Processing</strong> y <strong>HDR</strong> activos y que hay un <em>Volume</em> con Bloom.</p></div>
+  <div class="hint warning"><p>En Soft el radio pertenece al perfil: el override de <em>Width</em> por objeto no tiene efecto.</p></div>
+</article>
+
+<article data-page="contorno-wide" data-title="Contornos gruesos (Wide)" data-group="Guías" data-keywords="wide jump flood grueso uniforme por objeto color grosor">
+  <h1>Contornos gruesos <span class="tag">Wide</span></h1>
+  <p class="lead">Contornos de <mark>grosor exacto y uniforme</mark> (hasta 128 px) con esquinas redondeadas. Es la técnica por defecto.</p>
+  <figure><img src="assets/img/exhibit-03.webp" loading="lazy" alt="Expositor 03: tres piezas de ajedrez con contornos de distinto color y grosor"><figcaption>Expositor 03: un solo perfil; cada pieza cambia color y grosor con overrides.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Técnica Wide</strong><em>Technique</em> = <strong>Wide</strong> y elige <em>Width</em> en píxeles.</li>
+    <li><strong>Suavizado</strong><em>Softness</em> controla el antialiasing del borde exterior (1 px va bien).</li>
+    <li><strong>Variaciones por objeto</strong>Activa los overrides de <em>Color</em> y <em>Width</em> en cada <em>Outline Object</em>.</li>
+  </ol>
+  <div class="hint success"><p>Wide cuesta casi lo mismo con 1 objeto que con 100 del mismo perfil: el algoritmo trabaja sobre la pantalla, no sobre cada objeto.</p></div>
+  <div class="hint info"><p>Si la plataforma no puede renderizar texturas de coma flotante de dos canales (algunos WebGL y Android antiguos), Wide se dibuja automáticamente como Soft y el Inspector lo avisa.</p></div>
+</article>
+
+<article data-page="rellenos" data-title="Rellenos con patrones" data-group="Guías" data-keywords="fill relleno surface fill rayas puntos damero textura patrón">
+  <h1>Rellenos con patrones <span class="tag">Fill</span></h1>
+  <p class="lead">Pinta el interior de la silueta con un <mark>color</mark>, <mark>rayas</mark>, <mark>puntos</mark>, <mark>damero</mark> o tu propia <mark>textura</mark>. Ideal para estados (“seleccionado”, “bloqueado”) y para siluetas ocultas.</p>
+  <figure><img src="assets/img/exhibit-04.webp" loading="lazy" alt="Expositor 04: toro con rayas, esfera con puntos y cubo con textura"><figcaption>Expositor 04: rayas animadas, puntos y una textura de trama.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Activa el relleno</strong>En cualquier perfil, despliega <em>Surface Fill</em> y marca <strong>Enabled</strong>. Funciona con cualquier técnica, incluso con <em>None</em> (solo relleno).</li>
+    <li><strong>Elige el patrón</strong><em>Solid</em>, <em>Stripes</em>, <em>Dots</em>, <em>Checker</em> o <em>Texture</em>.</li>
+    <li><strong>Ajusta</strong><em>Scale</em> (tamaño en píxeles), <em>Angle</em>, <em>Thickness</em> y <em>Scroll</em> para animarlo.</li>
+  </ol>
+
+  <table>
+    <thead><tr><th>Patrón</th><th>Ajustes</th></tr></thead>
+    <tbody>
+      <tr><td>Solid</td><td class="wrap">Color (el alfa es la opacidad).</td></tr>
+      <tr><td>Stripes · Dots</td><td class="wrap">Scale, Angle, Thickness, Scroll.</td></tr>
+      <tr><td>Checker</td><td class="wrap">Scale, Angle, Scroll.</td></tr>
+      <tr><td>Texture</td><td class="wrap">Texture (con <em>Wrap Mode: Repeat</em>), Scale, Angle, Scroll. El alfa de la textura define el dibujo.</td></tr>
+    </tbody>
+  </table>
+  <div class="hint info"><p><em>Use Object Color</em> tiñe el relleno con el color de contorno de cada objeto: un solo perfil sirve para objetos de colores distintos.</p></div>
+</article>
+
+<article data-page="rayos-x" data-title="Ver a través de paredes" data-group="Guías" data-keywords="rayos x xray oclusión always visible occluded only detrás de la pared silueta oculta">
+  <h1>Ver a través de paredes</h1>
+  <p class="lead">Muestra aliados, objetivos o al jugador cuando quedan <mark>detrás de un obstáculo</mark>. Se controla con el ajuste <mark>Occlusion</mark> del perfil.</p>
+  <figure><img src="assets/img/exhibit-05.webp" loading="lazy" alt="Expositor 05: robot detrás de una pared con contorno rojo y relleno de rayas"><figcaption>Expositor 05: contorno <em>Always Visible</em> + relleno de rayas <em>Occluded Only</em>.</figcaption></figure>
+
+  <h2>Los tres modos</h2>
+  <table>
+    <thead><tr><th>Occlusion</th><th>Resultado</th><th>Uso típico</th></tr></thead>
+    <tbody>
+      <tr><td>Visible Only</td><td class="wrap">Solo alrededor de la parte visible.</td><td class="wrap">Hover y selección normales</td></tr>
+      <tr><td>Always Visible</td><td class="wrap">El objeto entero, también a través de paredes.</td><td class="wrap">Aliados, objetivos</td></tr>
+      <tr><td>Occluded Only</td><td class="wrap">Solo la parte oculta.</td><td class="wrap">Silueta del jugador tras una pared</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="step">Receta: silueta “detrás de la pared”</span></h2>
+  <ol class="steps">
+    <li><strong>Perfil de contorno</strong>Wide, <em>Occlusion</em> = <strong>Always Visible</strong>, <em>Priority</em> = 1.</li>
+    <li><strong>Perfil de relleno</strong><em>Technique</em> = <strong>None</strong>, <em>Occlusion</em> = <strong>Occluded Only</strong>, <em>Surface Fill</em> con rayas y un poco de <em>Scroll</em>.</li>
+    <li><strong>Combínalos</strong>Añade dos <em>Outline Object</em> al personaje, uno con cada perfil. Ver <a href="#/combinar">Combinar varios efectos</a>.</li>
+  </ol>
+  <div class="hint warning"><p>Los objetos eliminados por <em>Occlusion Culling</em> no se dibujan, así que tampoco su contorno de rayos X. Si un objeto parpadea como “oculto”, sube <em>Depth Bias</em> en el feature.</p></div>
+</article>
+
+<article data-page="combinar" data-title="Combinar varios efectos" data-group="Guías" data-keywords="stacking apilar combinar prioridad varios perfiles">
+  <h1>Combinar varios efectos</h1>
+  <p class="lead">Un objeto puede tener <mark>varios estilos a la vez</mark>: un brillo, un contorno encima y un relleno. Cada perfil aplica su efecto.</p>
+  <figure><img src="assets/img/exhibit-06.webp" loading="lazy" alt="Expositor 06: trofeo con brillo dorado, contorno blanco y relleno de puntos"><figcaption>Expositor 06: Soft dorado (prioridad 0) + Wide blanco con relleno de puntos (prioridad 1).</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Añade varios componentes</strong>Pon dos o más <em>Outline Object</em> en el mismo GameObject, cada uno con su perfil.</li>
+    <li><strong>Ordena con Priority</strong>Los perfiles con <em>Priority</em> mayor se dibujan encima.</li>
+  </ol>
+
+  <h2>Reglas de orden</h2>
+  <ul>
+    <li>Se dibuja por <strong>Priority</strong> ascendente; a igual prioridad, en el orden de la pila de capas y después en el de aparición de los componentes.</li>
+    <li>Dentro de un perfil, el relleno se dibuja antes que el contorno.</li>
+    <li>Un objeto puede estar en varias Outline Layers y tener componentes a la vez.</li>
+  </ul>
+</article>
+
+<article data-page="sin-componentes" data-title="Objetos sin componentes" data-group="Guías" data-keywords="rendering layers capas sin componentes batching gpu resident drawer dots entities rendimiento muchos objetos">
+  <h1>Muchos objetos sin componentes</h1>
+  <p class="lead">Marca objetos con una <mark>Rendering Layer</mark> y todos se contornean con el mismo perfil. Es la opción más eficiente: compatible con el <mark>SRP Batcher</mark>, el <mark>GPU Resident Drawer</mark> y Entities Graphics.</p>
+  <figure><img src="assets/img/exhibit-07.webp" loading="lazy" alt="Expositor 07: cajas con contorno magenta y barril con contorno lima, sin componentes"><figcaption>Expositor 07: las cajas usan la capa 8 (Wide) y el barril la capa 9 (Fast). Ninguno tiene componentes.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Pon nombre a la capa (opcional)</strong>Unity 6: <span class="path">Project Settings › Tags and Layers › Rendering Layers</span>. Unity 2022.3: <span class="path">Project Settings › Graphics › URP Global Settings</span>.</li>
+    <li><strong>Marca los objetos</strong>En el <em>Rendering Layer Mask</em> de cada renderer, activa la capa. Desde código: <code>OutlineRenderingLayers.Set(objeto, mascara, true)</code>.</li>
+    <li><strong>Añade una Outline Layer</strong>En el feature (para todo el proyecto) o en un <a href="#/scene-settings">Outline Scene Settings</a> (solo esa escena): elige la capa y un perfil.</li>
+  </ol>
+  <div class="hint warning"><p>Las Rendering Layers también controlan las <em>Light Layers</em>. Deja la capa <strong>Default</strong> activada en los objetos y usa capas extra para los contornos.</p></div>
+  <div class="hint info"><p>Para encender o apagar el contorno de un objeto concreto, cambia su Rendering Layer Mask. Para apagar todos a la vez, desactiva la Outline Layer (<em>Enabled</em>).</p></div>
+</article>
+
+<article data-page="raton" data-title="Hover y selección" data-group="Guías" data-keywords="hover selección ratón mouse click resaltar highlighter">
+  <h1>Resaltar y seleccionar con el ratón</h1>
+  <p class="lead">El clásico de los juegos de estrategia y de los objetos interactivos: <mark>contorno al pasar el ratón</mark> y otro distinto al <mark>hacer clic</mark>.</p>
+  <figure><img src="assets/img/exhibit-08.webp" loading="lazy" alt="Expositor 08: cofre seleccionado con contorno azul"><figcaption>Expositor 08: el cofre empieza seleccionado; en Play puedes seleccionar cualquier objeto de la sala.</figcaption></figure>
+
+  <h2><span class="step">Sin código: OutlineHighlighter</span></h2>
+  <ol class="steps">
+    <li><strong>Copia el script</strong><code>OutlineHighlighter</code> está en la muestra Demo (<code>Scripts/</code>). Añádelo a cualquier objeto de la escena.</li>
+    <li><strong>Asigna dos perfiles</strong><em>Hover Profile</em> (por ejemplo, Wide blanco fino) y <em>Selection Profile</em> (por ejemplo, Wide de color con <em>Always Visible</em>).</li>
+    <li><strong>Colliders</strong>Los objetos seleccionables necesitan un collider y estar en <em>Selectable Layers</em>.</li>
+  </ol>
+  <p>También expone eventos (<em>On Hover Enter</em>, <em>On Hover Exit</em>, <em>On Selection Changed</em>) para conectarlos desde el Inspector.</p>
+
+  <h2>Con tu propio código</h2>
+<pre><code data-lang="cs">OutlineObject hover;
+
+void UpdateHover(GameObject target)
+{
+    if (hover != null) hover.Hide();
+    hover = target != null ? OutlineObject.Add(target, hoverProfile) : null;
+    if (hover != null) hover.Show();
+}</code></pre>
+  <div class="hint success"><p>Dale al perfil de hover una <em>Priority</em> alta (por ejemplo 20) para que siempre quede por encima de otros contornos del objeto.</p></div>
+</article>
+
+<article data-page="recortes" data-title="Hojas, vallas y recortes" data-group="Guías" data-keywords="alpha cutout recorte alfa hojas vallas transparencia clipping">
+  <h1>Hojas, vallas y recortes</h1>
+  <p class="lead">Con materiales de <mark>alpha clipping</mark> (hojas, rejas, vallas), el contorno sigue la forma recortada, no el rectángulo de la malla.</p>
+  <figure><img src="assets/img/exhibit-09.webp" loading="lazy" alt="Expositor 09: árbol con hojas recortadas y contorno lima"><figcaption>Expositor 09: cada hoja recibe su propio contorno.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Activa Alpha Cutout</strong>En el perfil, deja <em>Alpha Cutout</em> marcado (lo está por defecto).</li>
+    <li><strong>Usa un material con recorte</strong>Un material URP Lit/Unlit con <em>Alpha Clipping</em> activo. Easy Outline lee <code>_BaseMap</code>, <code>_BaseColor</code>, <code>_Cutoff</code> y <code>_AlphaClip</code>.</li>
+  </ol>
+  <div class="hint info"><p>¿Shader Graph o un shader con otros nombres de propiedad? Cambia <em>Geometry</em> a <strong>Object Depth Pass</strong>: el recorte lo hace tu propio shader. Ver <a href="#/animados">Objetos animados</a>.</p></div>
+</article>
+
+<article data-page="animados" data-title="Objetos animados" data-group="Guías" data-keywords="animación vertex shader skinning blend shapes shader graph object depth pass viento olas">
+  <h1>Objetos animados</h1>
+  <p class="lead">Personajes con huesos, blend shapes y shaders que mueven vértices (viento, olas, gelatina): el contorno puede <mark>seguir la deformación</mark>.</p>
+  <figure><img src="assets/img/exhibit-10.webp" loading="lazy" alt="Expositor 10: gelatina deformada con contorno verde"><figcaption>Expositor 10: el contorno sigue la deformación del shader <code>Wobble</code>.</figcaption></figure>
+
+  <table>
+    <thead><tr><th>Tipo de animación</th><th>Qué hacer</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Skinning y blend shapes</td><td class="wrap">Nada: funciona siempre, con todas las técnicas.</td></tr>
+      <tr><td class="wrap">Vertex shader (viento, olas, Shader Graph)</td><td class="wrap">Perfil Soft, Wide o Fill con <em>Geometry</em> = <strong>Object Depth Pass</strong>.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>¿Qué hace Object Depth Pass?</h2>
+  <p>Dibuja la silueta con la pasada <code>DepthOnly</code> de <strong>tu propio shader</strong>, que aplica el mismo desplazamiento que ves en pantalla. Todos los shaders de URP y de Shader Graph la tienen.</p>
+  <div class="figure-pair">
+    <figure><img src="assets/img/vertex-objectdepth.webp" loading="lazy" alt="Contorno que sigue la deformación"><figcaption>Object Depth Pass: sigue la deformación</figcaption></figure>
+    <figure><img src="assets/img/vertex-outlineshader.webp" loading="lazy" alt="Contorno con la forma original"><figcaption>Outline Shader: usa la malla original</figcaption></figure>
+  </div>
+  <div class="hint warning"><p>Fast no puede seguir animación hecha en el vertex shader. Con <em>Object Depth Pass</em> no hay override de color ni de grosor por objeto: se usan los del perfil.</p></div>
+</article>
+
+<article data-page="bordes" data-title="Detección de bordes" data-group="Guías" data-keywords="edge detection bordes cómic toon líneas pantalla completa profundidad normales">
+  <h1>Detección de bordes <span class="tag">estilo cómic</span></h1>
+  <p class="lead">Un efecto a <mark>pantalla completa</mark> que dibuja líneas donde cambian la profundidad, las normales, el color o los objetos. No necesita componentes.</p>
+  <figure><img src="assets/img/exhibit-11.webp" loading="lazy" alt="Expositor 11: arquitectura con líneas dibujadas a mano"><figcaption>Expositor 11: líneas solo en este expositor gracias a la máscara <em>Include</em>.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Actívala</strong>En el feature, marca <em>Edge Detection › Enabled</em>.</li>
+    <li><strong>Crea un perfil</strong>Pulsa <strong>New</strong> junto a <em>Profile</em> (o <span class="path">Create › Easy Outline › Edge Detection Profile</span>).</li>
+    <li><strong>Elige las fuentes</strong><em>Depth</em> (siluetas), <em>Normals</em> (pliegues), <em>Color</em> (cambios de luminancia) y <em>Sections</em> (entre objetos).</li>
+    <li><strong>Ajusta el trazo</strong><em>Line Color</em>, <em>Thickness</em> y los umbrales de cada fuente.</li>
+  </ol>
+
+  <h2>Líneas solo en algunos objetos</h2>
+  <p>Con <em>Mask Mode</em> eliges dónde aparecen las líneas usando Rendering Layers:</p>
+  <ul>
+    <li><strong>Include</strong>: solo sobre los objetos de <em>Mask Layers</em> (por ejemplo, solo personajes).</li>
+    <li><strong>Exclude</strong>: en todas partes excepto sobre ellos (por ejemplo, sin líneas en la vegetación).</li>
+  </ul>
+  <div class="figure-pair">
+    <figure><img src="assets/img/edges-sections.webp" loading="lazy" alt="Bordes por secciones"><figcaption>Sections (Object Id) + color</figcaption></figure>
+    <figure><img src="assets/img/edges-masked.webp" loading="lazy" alt="Bordes con máscara Include"><figcaption>Máscara Include</figcaption></figure>
+  </div>
+
+  <h2>¿Demasiadas o pocas líneas?</h2>
+  <ul>
+    <li>Líneas falsas en suelos inclinados: activa <em>Grazing Angle Correction</em> o sube <em>Depth Threshold</em>.</li>
+    <li>Menos líneas interiores: sube <em>Normal Threshold</em>.</li>
+    <li>Líneas entre objetos que se tocan: activa <em>Section Edges</em>.</li>
+  </ul>
+  <div class="hint info"><p>Por defecto se dibuja antes de los transparentes, así que el agua, el cristal y las partículas quedan por encima de las líneas. Puedes cambiarlo en <em>Injection Point</em>.</p></div>
+</article>
+
+<article data-page="dibujado-mano" data-title="Estilo dibujado a mano" data-group="Guías" data-keywords="dibujado a mano sketch distorsión boil temblor grosor variable">
+  <h1>Estilo dibujado a mano</h1>
+  <p class="lead">Convierte la detección de bordes en un <mark>trazo de lápiz</mark>: líneas irregulares que “tiemblan” como en la animación tradicional.</p>
+  <figure><img src="assets/img/demo-edges.webp" loading="lazy" alt="Sala completa con líneas dibujadas a mano"><figcaption>Perfil <em>Edges Hand Drawn</em> de la Demo aplicado a toda la escena.</figcaption></figure>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Distorsión</strong>Activa <em>World-Space Distortion</em>: <em>Amount</em> 1.5–3 px y <em>Frequency</em> 2–4.</li>
+    <li><strong>Grosor variable</strong><em>Thickness Variation</em> entre 0.4 y 0.7.</li>
+    <li><strong>“Boiling”</strong><em>Boil Frame Rate</em> = 6–8: el ruido cambia varias veces por segundo, como un dibujo animado.</li>
+    <li><strong>Atenuación</strong><em>Distance Fade</em> suaviza las líneas lejanas.</li>
+  </ol>
+  <div class="hint success"><p>El ruido se calcula en espacio de mundo: las líneas “se pegan” a las superficies y no resbalan al mover la cámara.</p></div>
+</article>
+
+<article data-page="por-escena" data-title="Ajustes por escena" data-group="Guías" data-keywords="outline scene settings por escena nivel sin modificar renderer runtime">
+  <h1>Ajustes por escena</h1>
+  <p class="lead">¿Un nivel con estilo cómic y otro sin líneas? Con <mark>Outline Scene Settings</mark> cada escena añade sus propias capas y su propia detección de bordes, <mark>sin tocar el renderer</mark> del proyecto.</p>
+
+  <h2><span class="step">Cómo se hace</span></h2>
+  <ol class="steps">
+    <li><strong>Añade el componente</strong>Crea un GameObject vacío y añade <span class="path">Easy Outline › Outline Scene Settings</span>.</li>
+    <li><strong>Capas propias</strong>En <em>Layers</em>, añade Outline Layers: se suman a las del feature mientras la escena está cargada.</li>
+    <li><strong>Bordes propios</strong>Marca <em>Override Edge Detection</em> y elige si se dibujan y con qué perfil.</li>
+  </ol>
+  <div class="hint success"><p>Como es un objeto de escena, los cambios que hagas en modo Play <strong>se deshacen al salir</strong>. Es la forma segura de cambiar ajustes en tiempo de ejecución.</p></div>
+  <div class="hint info"><p>Prioridad de la detección de bordes: <em>Outline Camera</em> &gt; <em>Outline Scene Settings</em> (el último activado) &gt; feature.</p></div>
+</article>
+
+<!-- =================================================================================== COMPONENTES -->
+
+<article data-page="feature" data-title="Easy Outline Feature" data-group="Componentes" data-keywords="renderer feature ajustes injection point camera types depth bias debug view">
+  <h1>Easy Outline Feature</h1>
+  <p class="lead">El renderer feature que dibuja todos los efectos. Se añade una vez por <em>Universal Renderer Data</em> (lo hace <span class="path">Tools › Easy Outline › Set Up Renderers</span>).</p>
+
+  <h2>Campos del Inspector</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Outline Layers</td><td class="wrap">Pila de capas: cada una tiene <em>Enabled</em>, nombre, <em>Profile</em> y <em>Rendering Layers</em>.</td><td><span class="def">vacía</span></td></tr>
+      <tr><td>Render Outline Objects</td><td class="wrap">Dibuja también los componentes <em>Outline Object</em>.</td><td><span class="def">on</span></td></tr>
+      <tr><td>Injection Point</td><td class="wrap">Cuándo se dibujan contornos y rellenos. Antes del post-procesado, el Bloom afecta a los colores HDR.</td><td><span class="def">Before Post Processing</span></td></tr>
+      <tr><td>Edge Detection</td><td class="wrap">Activa la detección de bordes.</td><td><span class="def">off</span></td></tr>
+      <tr><td>Profile (bordes)</td><td class="wrap"><em>Edge Detection Profile</em>, editable en línea.</td><td><span class="def">—</span></td></tr>
+      <tr><td>Injection Point (bordes)</td><td class="wrap">Antes de los transparentes, para que vidrio y partículas queden encima.</td><td><span class="def">Before Transparents</span></td></tr>
+      <tr><td>Camera Types</td><td class="wrap">Tipos de cámara que dibujan los efectos.</td><td><span class="def">Game, Scene View</span></td></tr>
+      <tr><td>Depth Bias</td><td class="wrap">Tolerancia al comparar siluetas con la profundidad. Súbela si algo parpadea como oculto.</td><td><span class="def">0.01</span></td></tr>
+      <tr><td>Debug View</td><td class="wrap">Muestra un buffer intermedio. Ver <a href="#/depuracion">Depuración</a>.</td><td><span class="def">None</span></td></tr>
+    </tbody>
+  </table>
+  <div class="hint warning"><p>Si el Inspector muestra <strong>Shader references are missing</strong>, pulsa <strong>Repair</strong>: las referencias hacen falta para incluir los shaders en las builds. Antes de cada build se reparan solas.</p></div>
+</article>
+
+<article data-page="outline-profile" data-title="Outline Profile" data-group="Componentes" data-keywords="perfil ajustes técnica color width brightness opacity occlusion priority softness intensity hardness geometry alpha cutout fill">
+  <h1>Outline Profile</h1>
+  <p class="lead">El estilo de un contorno. Créalo con <span class="path">Assets › Create › Easy Outline › Outline Profile</span> o con el botón <strong>New</strong>. El Inspector solo muestra los ajustes de la técnica elegida.</p>
+
+  <h2>General</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Technique</td><td class="wrap"><em>None</em> (solo relleno), <em>Fast</em>, <em>Soft</em> o <em>Wide</em>.</td><td><span class="def">Wide</span></td></tr>
+      <tr><td>Color</td><td class="wrap">Color HDR. Por encima de 1 brilla con Bloom.</td><td><span class="def">naranja</span></td></tr>
+      <tr><td>Width</td><td class="wrap">Grosor en píxeles (Wide), radio (Soft) o píxeles/unidades (Fast). Máximo 128.</td><td><span class="def">4</span></td></tr>
+      <tr><td>Brightness</td><td class="wrap">Multiplicador HDR del color.</td><td><span class="def">1</span></td></tr>
+      <tr><td>Opacity</td><td class="wrap">Opacidad del contorno y del relleno.</td><td><span class="def">1</span></td></tr>
+      <tr><td>Occlusion</td><td class="wrap"><em>Visible Only</em>, <em>Always Visible</em> u <em>Occluded Only</em>. Ver <a href="#/rayos-x">Rayos X</a>.</td><td><span class="def">Visible Only</span></td></tr>
+      <tr><td>Priority</td><td class="wrap">Orden de dibujo: mayor = encima.</td><td><span class="def">0</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Por técnica</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Técnica</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Width Space</td><td>Fast</td><td class="wrap">Píxeles de pantalla o unidades de mundo.</td><td><span class="def">Screen Pixels</span></td></tr>
+      <tr><td>Smooth Normals</td><td>Fast</td><td class="wrap">Usa las normales suavizadas de UV3 si existen.</td><td><span class="def">on</span></td></tr>
+      <tr><td>Intensity</td><td>Soft</td><td class="wrap">Hace que el brillo llegue más lejos.</td><td><span class="def">2</span></td></tr>
+      <tr><td>Hardness</td><td>Soft</td><td class="wrap">0 = degradado, 1 = borde duro.</td><td><span class="def">0</span></td></tr>
+      <tr><td>Resolution</td><td>Soft</td><td class="wrap"><em>Full</em>, <em>Half</em> o <em>Quarter</em>.</td><td><span class="def">Half</span></td></tr>
+      <tr><td>Blend</td><td>Soft</td><td class="wrap"><em>Alpha</em> o <em>Additive</em> (glow).</td><td><span class="def">Alpha</span></td></tr>
+      <tr><td>Draw Inside</td><td>Soft</td><td class="wrap">Dibuja el brillo también sobre el objeto.</td><td><span class="def">off</span></td></tr>
+      <tr><td>Softness</td><td>Wide</td><td class="wrap">Antialiasing del borde exterior, en píxeles.</td><td><span class="def">1</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Silueta</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Geometry</td><td class="wrap"><em>Outline Shader</em> (permite overrides y cutout URP) u <em>Object Depth Pass</em> (usa la pasada DepthOnly del shader del objeto: <a href="#/animados">animación de vértices</a>, Shader Graph). No afecta a Fast.</td><td><span class="def">Outline Shader</span></td></tr>
+      <tr><td>Alpha Cutout</td><td class="wrap">Los materiales con alpha clipping recortan la silueta.</td><td><span class="def">on</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Surface Fill</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Enabled</td><td class="wrap">Rellena la silueta.</td><td><span class="def">off</span></td></tr>
+      <tr><td>Pattern</td><td class="wrap"><em>Solid</em>, <em>Stripes</em>, <em>Dots</em>, <em>Checker</em> o <em>Texture</em>.</td><td><span class="def">Solid</span></td></tr>
+      <tr><td>Color</td><td class="wrap">Color HDR; el alfa es la opacidad.</td><td><span class="def">naranja 25 %</span></td></tr>
+      <tr><td>Use Object Color</td><td class="wrap">Multiplica por el color de contorno de cada objeto.</td><td><span class="def">off</span></td></tr>
+      <tr><td>Scale · Angle</td><td class="wrap">Tamaño en píxeles y rotación del patrón.</td><td><span class="def">12 · 45°</span></td></tr>
+      <tr><td>Thickness</td><td class="wrap">Grosor de rayas y puntos (0–1).</td><td><span class="def">0.5</span></td></tr>
+      <tr><td>Scroll</td><td class="wrap">Desplazamiento en píxeles por segundo.</td><td><span class="def">0, 0</span></td></tr>
+      <tr><td>Texture</td><td class="wrap">Textura del patrón <em>Texture</em>.</td><td><span class="def">—</span></td></tr>
+    </tbody>
+  </table>
+  <div class="hint warning"><p>Los perfiles son assets compartidos: cambiarlos en modo Play afecta a todos los objetos y, en el Editor, se guarda en el asset. Para cambios por objeto usa <code>profile.Clone()</code> o los overrides de <em>Outline Object</em>.</p></div>
+</article>
+
+<article data-page="outline-object" data-title="Outline Object" data-group="Componentes" data-keywords="componente outline object overrides source renderers smooth normals">
+  <h1>Outline Object</h1>
+  <p class="lead">Contornea un GameObject concreto. Se añade con <span class="path">Add Component › Easy Outline › Outline Object</span> o con <span class="path">GameObject › Easy Outline › Add Outline To Selection</span>. Funciona en modo edición.</p>
+
+  <h2>Campos del Inspector</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Profile</td><td class="wrap">Estilo. Vacío = perfil por defecto (Wide naranja). <strong>New</strong> crea uno; <em>Profile Settings</em> lo edita en línea.</td></tr>
+      <tr><td>Color · Width · Opacity</td><td class="wrap">Overrides por objeto: activa la casilla y fija el valor.</td></tr>
+      <tr><td>Source</td><td class="wrap"><em>Self And Children</em>, <em>Self Only</em> o <em>Manual</em> (lista de renderers).</td></tr>
+      <tr><td>Generate Smooth Normals</td><td class="wrap">Solo Fast: genera normales suavizadas para mallas legibles sin UV3.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Qué admite cada técnica</h2>
+  <table>
+    <thead><tr><th>Override</th><th>Fast</th><th>Soft</th><th>Wide</th><th>Object Depth Pass</th></tr></thead>
+    <tbody>
+      <tr><td>Color</td><td></td><td></td><td></td><td>—</td></tr>
+      <tr><td>Width</td><td></td><td>—</td><td></td><td>—</td></tr>
+      <tr><td>Opacity</td><td></td><td></td><td></td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p>Se usan <code>MeshRenderer</code> y <code>SkinnedMeshRenderer</code>; partículas, sprites y líneas se ignoran. El Inspector indica cuántos renderers ha encontrado.</p>
+  <div class="hint info"><p>Si añades hijos o cambias materiales por código, llama a <code>RefreshRenderers()</code>.</p></div>
+</article>
+
+<article data-page="edge-profile" data-title="Edge Detection Profile" data-group="Componentes" data-keywords="edge detection profile campos thickness kernel threshold section mask distance fade distortion boil">
+  <h1>Edge Detection Profile</h1>
+  <p class="lead">Ajustes de la detección de bordes. Créalo con <span class="path">Assets › Create › Easy Outline › Edge Detection Profile</span>. Puede compartirse entre renderers.</p>
+
+  <h2>Campos del Inspector</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th><th>Por defecto</th></tr></thead>
+    <tbody>
+      <tr><td>Line Color</td><td class="wrap">Color HDR; el alfa multiplica la opacidad.</td><td><span class="def">casi negro</span></td></tr>
+      <tr><td>Thickness</td><td class="wrap">Grosor en píxeles (0.5–8).</td><td><span class="def">1</span></td></tr>
+      <tr><td>Opacity</td><td class="wrap">Opacidad global.</td><td><span class="def">1</span></td></tr>
+      <tr><td>Kernel</td><td class="wrap"><em>Cross</em> (4 muestras) o <em>Square</em> (8).</td><td><span class="def">Square</span></td></tr>
+      <tr><td>Depth · Threshold</td><td class="wrap">Bordes por profundidad y diferencia relativa necesaria.</td><td><span class="def">on · 0.05</span></td></tr>
+      <tr><td>Grazing Angle Correction</td><td class="wrap">Evita líneas falsas en superficies muy inclinadas.</td><td><span class="def">on</span></td></tr>
+      <tr><td>Normals · Threshold</td><td class="wrap">Bordes por cambio de normal.</td><td><span class="def">on · 0.4</span></td></tr>
+      <tr><td>Color · Threshold</td><td class="wrap">Bordes por cambio de luminancia.</td><td><span class="def">off · 0.2</span></td></tr>
+      <tr><td>Section Edges</td><td class="wrap">Líneas entre objetos (<em>Object Id</em>) o zonas pintadas (<em>Vertex Color</em>).</td><td><span class="def">off</span></td></tr>
+      <tr><td>Mask Mode · Layers</td><td class="wrap"><em>None</em>, <em>Include</em> o <em>Exclude</em> por Rendering Layers.</td><td><span class="def">None</span></td></tr>
+      <tr><td>Distance Fade</td><td class="wrap">Atenúa entre <em>Fade Start</em> y <em>Fade End</em>.</td><td><span class="def">off · 30 → 80</span></td></tr>
+      <tr><td>World-Space Distortion</td><td class="wrap"><em>Amount</em> (px) y <em>Frequency</em>.</td><td><span class="def">off · 2 · 3</span></td></tr>
+      <tr><td>Thickness Variation</td><td class="wrap">Variación aleatoria del grosor.</td><td><span class="def">0</span></td></tr>
+      <tr><td>Boil Frame Rate</td><td class="wrap">Regenera el ruido N veces por segundo.</td><td><span class="def">0</span></td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article data-page="outline-camera" data-title="Outline Camera" data-group="Componentes" data-keywords="outline camera por cámara minimapa excluded profiles debug">
+  <h1>Outline Camera</h1>
+  <p class="lead">Componente opcional para cámaras. Sin él, cada cámara dibuja todo lo configurado. Se añade con <span class="path">Add Component › Easy Outline › Outline Camera</span>.</p>
+
+  <h2>Campos del Inspector</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Render Outlines</td><td class="wrap">Dibuja contornos y rellenos en esta cámara.</td></tr>
+      <tr><td>Render Edge Detection</td><td class="wrap">Dibuja la detección de bordes en esta cámara.</td></tr>
+      <tr><td>Edge Detection Override</td><td class="wrap">Otro perfil de bordes solo para esta cámara.</td></tr>
+      <tr><td>Excluded Profiles</td><td class="wrap">Perfiles que esta cámara no dibuja (por ejemplo, la selección en un minimapa).</td></tr>
+      <tr><td>Debug View</td><td class="wrap">Vista de depuración propia.</td></tr>
+    </tbody>
+  </table>
+  <p>Los componentes <em>Outline Object</em> respetan el <em>Culling Mask</em> de cada cámara.</p>
+</article>
+
+<article data-page="scene-settings" data-title="Outline Scene Settings" data-group="Componentes" data-keywords="outline scene settings capas escena bordes override">
+  <h1>Outline Scene Settings</h1>
+  <p class="lead">Ajustes que solo existen mientras la escena está cargada: capas extra y detección de bordes propia, en todas las cámaras (Game y Scene View) y en modo edición. Guía: <a href="#/por-escena">Ajustes por escena</a>.</p>
+
+  <h2>Campos del Inspector</h2>
+  <table>
+    <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Layers</td><td class="wrap">Outline Layers que se suman a la pila de cada feature.</td></tr>
+      <tr><td>Override Edge Detection</td><td class="wrap">Sustituye los ajustes de bordes del feature.</td></tr>
+      <tr><td>Edge Detection</td><td class="wrap">Dibuja o no la detección de bordes (si se sustituye).</td></tr>
+      <tr><td>Edge Detection Profile</td><td class="wrap">Perfil que se usa en lugar del del feature.</td></tr>
+    </tbody>
+  </table>
+  <div class="hint info"><p>Con varias escenas cargadas, las capas de todas se suman; para los bordes manda el último componente activado.</p></div>
+</article>
+
+<!-- =================================================================================== SCRIPTING -->
+
+<article data-page="api-intro" data-title="Empezar con la API" data-group="Scripting" data-keywords="api código namespace assembly using scripting">
+  <h1>Empezar con la API</h1>
+  <p class="lead">Todo lo que haces en el Inspector se puede hacer desde código. Añade <code>using EasyOutline;</code> y ya está.</p>
+
+  <table>
+    <thead><tr><th>Ensamblado</th><th>Namespace</th><th>Contenido</th></tr></thead>
+    <tbody>
+      <tr><td>EasyOutline.Runtime</td><td><code>EasyOutline</code></td><td class="wrap">Componentes, perfiles, feature y utilidades.</td></tr>
+      <tr><td>EasyOutline.Editor</td><td><code>EasyOutline.Editor</code></td><td class="wrap">Configuración de renderers y bakeado (solo Editor).</td></tr>
+    </tbody>
+  </table>
+  <p>Si tu código está en un <em>Assembly Definition</em>, añade la referencia a <code>EasyOutline.Runtime</code>.</p>
+
+  <h2>Lo más usado</h2>
+<pre><code data-lang="cs">using EasyOutline;
+
+// Contornear y quitar
+var outline = OutlineObject.Add(enemy, enemyProfile);
+OutlineObject.RemoveAll(enemy);
+
+// Encender y apagar sin crear componentes
+outline.Hide();
+outline.Show();
+
+// Cambiar un solo objeto
+outline.Color = Color.red;
+outline.Width = 6f;</code></pre>
+
+  <div class="cards">
+    <a class="card" href="#/api-outline-object"><strong>OutlineObject</strong><span>Añadir, configurar y escuchar contornos.</span></a>
+    <a class="card" href="#/api-outline-profile"><strong>OutlineProfile</strong><span>Crear y clonar estilos en tiempo de ejecución.</span></a>
+    <a class="card" href="#/api-layers"><strong>Rendering Layers</strong><span>Contornear sin componentes.</span></a>
+    <a class="card" href="#/api-eventos"><strong>Eventos</strong><span>Saber cuándo se muestra u oculta un contorno.</span></a>
+  </div>
+</article>
+
+<article data-page="api-outline-object" data-title="OutlineObject" data-group="Scripting" data-keywords="api outlineobject add removeall color width opacity show hide isvisible profile source refreshrenderers clearoverrides">
+  <h1>OutlineObject</h1>
+  <p class="lead">El componente que contornea un objeto. Todas sus propiedades se aplican al instante.</p>
+  <figure><img src="assets/img/exhibit-12.webp" loading="lazy" alt="Expositor 12: nudo con contorno de color animado desde código"><figcaption>Expositor 12: el color y el grosor cambian cada frame desde un script.</figcaption></figure>
+
+  <h2>Resumen</h2>
+  <table>
+    <thead><tr><th>Miembro</th><th>Tipo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Add(GameObject, OutlineProfile)</td><td><code>OutlineObject</code></td><td class="wrap">Añade un contorno con ese perfil, o reutiliza el que ya tenga.</td></tr>
+      <tr><td>RemoveAll(GameObject)</td><td><code>void</code></td><td class="wrap">Quita todos los contornos del objeto.</td></tr>
+      <tr><td>Profile</td><td><code>OutlineProfile</code></td><td class="wrap">Estilo. <code>null</code> = perfil por defecto.</td></tr>
+      <tr><td>Color · Width · Opacity</td><td><code>Color · float</code></td><td class="wrap">Asignar un valor activa su override.</td></tr>
+      <tr><td>ClearOverrides()</td><td><code>void</code></td><td class="wrap">Vuelve a los valores del perfil.</td></tr>
+      <tr><td>Show() · Hide()</td><td><code>void</code></td><td class="wrap">Activa o desactiva el componente.</td></tr>
+      <tr><td>IsVisible</td><td><code>bool</code></td><td class="wrap">Lo mismo, como propiedad.</td></tr>
+      <tr><td>Source</td><td><code>RendererSource</code></td><td class="wrap"><em>SelfAndChildren</em>, <em>SelfOnly</em> o <em>Manual</em>.</td></tr>
+      <tr><td>ManualRenderers</td><td><code>List&lt;Renderer&gt;</code></td><td class="wrap">Renderers usados con <em>Manual</em>.</td></tr>
+      <tr><td>RefreshRenderers()</td><td><code>void</code></td><td class="wrap">Vuelve a buscar renderers (tras añadir hijos o cambiar materiales).</td></tr>
+      <tr><td>ActiveObjects</td><td><code>IReadOnlyList</code></td><td class="wrap">Todos los contornos activos (estático).</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Ejemplos</h2>
+<pre><code data-lang="cs">// Añadir (o reutilizar) un contorno.
+var outline = OutlineObject.Add(enemy, hoverProfile);
+
+// Overrides: asignar un valor activa su override.
+outline.Color = Color.red;
+outline.Width = 6f;        // [0, 128]; Soft lo ignora
+outline.Opacity = 0.5f;    // [0, 1]
+outline.ClearOverrides();
+
+// Cambiar de perfil o de renderers.
+outline.Profile = selectionProfile;
+outline.Source = OutlineObject.RendererSource.SelfOnly;
+outline.RefreshRenderers();</code></pre>
+
+  <h3>Animar desde código</h3>
+  <p>El expositor 12 de la Demo (<code>OutlineColorCycle</code>) cambia el color y el grosor cada frame:</p>
+<pre><code data-lang="cs">void Update()
+{
+    float hue = Mathf.Repeat(Time.time * 0.12f, 1f);
+    outline.Color = Color.HSVToRGB(hue, 0.75f, 1f) * 1.4f;   // HDR: brilla con Bloom
+    outline.Width = Mathf.Lerp(3f, 9f, 0.5f + 0.5f * Mathf.Sin(Time.time * 3f));
+}</code></pre>
+</article>
+
+<article data-page="api-outline-profile" data-title="OutlineProfile" data-group="Scripting" data-keywords="api outlineprofile createinstance clone validate default">
+  <h1>OutlineProfile</h1>
+  <p class="lead">Un <code>ScriptableObject</code> con el estilo. Sus campos son públicos y se leen cada frame.</p>
+<pre><code data-lang="cs">var profile = ScriptableObject.CreateInstance&lt;OutlineProfile&gt;();
+profile.technique = OutlineTechnique.Wide;
+profile.color = Color.cyan;
+profile.width = 5f;
+profile.occlusion = OutlineOcclusion.AlwaysVisible;
+profile.fill = true;
+profile.fillPattern = FillPattern.Stripes;
+profile.Validate();   // limita los valores a rangos seguros
+
+// Copia independiente de un asset, segura para modificar en Play.
+var runtimeProfile = sharedProfile.Clone();</code></pre>
+  <div class="hint warning"><p>Modificar un asset de perfil en modo Play cambia el asset en el Editor. Usa <code>Clone()</code> para cambios temporales.</p></div>
+
+  <h2>Tipos</h2>
+  <table>
+    <thead><tr><th>Enum</th><th>Valores</th></tr></thead>
+    <tbody>
+      <tr><td><code>OutlineTechnique</code></td><td class="wrap">None, Fast, Soft, Wide</td></tr>
+      <tr><td><code>OutlineOcclusion</code></td><td class="wrap">VisibleOnly, AlwaysVisible, OccludedOnly</td></tr>
+      <tr><td><code>OutlineGeometry</code></td><td class="wrap">OutlineShader, ObjectDepthPass</td></tr>
+      <tr><td><code>FillPattern</code></td><td class="wrap">Solid, Stripes, Dots, Checker, Texture</td></tr>
+      <tr><td><code>OutlineDebugView</code></td><td class="wrap">None, OutlineMask, SoftBlur, JumpFloodDistance, SceneDepth, SceneNormals, Edges, SectionMap</td></tr>
+      <tr><td><code>OutlineInjectionPoint</code></td><td class="wrap">BeforeTransparents, AfterTransparents, BeforePostProcessing</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article data-page="api-feature" data-title="EasyOutlineFeature" data-group="Scripting" data-keywords="api feature instances layers addlayer setlayerenabled edgedetection debugview">
+  <h1>EasyOutlineFeature</h1>
+  <p class="lead">Accede a los features activos (uno por renderer) para cambiar capas y bordes en todo el proyecto.</p>
+<pre><code data-lang="cs">foreach (var feature in EasyOutlineFeature.Instances)
+{
+    feature.SetLayerEnabled("Enemies", false);
+    feature.AddLayer("Pickups", pickupProfile, OutlineRenderingLayers.ToMask(9));
+    feature.EdgeDetection = true;
+    feature.EdgeDetectionProfile = comicEdges;
+    feature.DebugView = OutlineDebugView.None;
+}</code></pre>
+  <div class="hint warning"><p>Los renderer features son assets: en el Editor, los cambios hechos en Play se quedan guardados. Para cambios temporales usa <a href="#/api-scene-settings">OutlineSceneSettings</a>.</p></div>
+</article>
+
+<article data-page="api-scene-settings" data-title="Scene Settings y Camera" data-group="Scripting" data-keywords="api outlinescenesettings outlinecamera excludedprofiles override">
+  <h1>OutlineSceneSettings y OutlineCamera</h1>
+  <p class="lead">Ajustes por escena y por cámara que no modifican assets.</p>
+
+  <h2>OutlineSceneSettings</h2>
+<pre><code data-lang="cs">var scene = gameObject.AddComponent&lt;OutlineSceneSettings&gt;();
+scene.layers.Add(new OutlineLayer("Pickups", pickupProfile, OutlineRenderingLayers.ToMask(9)));
+scene.overrideEdgeDetection = true;
+scene.edgeDetection = true;
+scene.edgeDetectionProfile = comicEdges;
+
+scene.FindLayer("Pickups").enabled = false;</code></pre>
+
+  <h2>OutlineCamera</h2>
+<pre><code data-lang="cs">var settings = minimapCamera.gameObject.AddComponent&lt;OutlineCamera&gt;();
+settings.renderEdgeDetection = false;
+settings.excludedProfiles.Add(selectionProfile);</code></pre>
+</article>
+
+<article data-page="api-layers" data-title="Rendering Layers" data-group="Scripting" data-keywords="api outlinerenderinglayers tomask set has">
+  <h1>Rendering Layers desde código</h1>
+  <p class="lead"><code>OutlineRenderingLayers</code> marca y desmarca objetos sin tocar los bits a mano.</p>
+<pre><code data-lang="cs">uint enemies = OutlineRenderingLayers.ToMask(8);
+
+OutlineRenderingLayers.Set(enemyRoot, enemies, true);   // incluye los hijos
+OutlineRenderingLayers.Set(renderer, enemies, false);   // un solo renderer
+bool outlined = OutlineRenderingLayers.Has(renderer, enemies);</code></pre>
+  <p>Guía completa: <a href="#/sin-componentes">Muchos objetos sin componentes</a>.</p>
+</article>
+
+<article data-page="api-eventos" data-title="Eventos" data-group="Scripting" data-keywords="eventos shown hidden visibilitychanged activeobjects unityevent">
+  <h1>Eventos</h1>
+  <p class="lead">Reacciona cuando un contorno aparece o desaparece.</p>
+<pre><code data-lang="cs">// Globales: cualquier OutlineObject.
+OutlineObject.Shown  += o =&gt; Debug.Log($"{o.name} contorneado");
+OutlineObject.Hidden += o =&gt; Debug.Log($"{o.name} sin contorno");
+
+// Solo este contorno.
+outline.VisibilityChanged += (o, visible) =&gt; { /* ... */ };
+
+// Todos los contornos activos.
+IReadOnlyList&lt;OutlineObject&gt; active = OutlineObject.ActiveObjects;</code></pre>
+  <p>El script <code>OutlineHighlighter</code> de la Demo expone además <code>UnityEvent</code>s (<em>onHoverEnter</em>, <em>onHoverExit</em>, <em>onSelectionChanged</em>) para conectarlos desde el Inspector.</p>
+</article>
+
+<article data-page="api-editor" data-title="Herramientas del Editor" data-group="Scripting" data-keywords="menús herramientas editor set up renderers bake smoothed normals">
+  <h1>Herramientas del Editor</h1>
+  <p class="lead">Menús que ahorran trabajo y su equivalente desde código.</p>
+  <table>
+    <thead><tr><th>Menú</th><th>Acción</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Tools › Easy Outline › Set Up Renderers</td><td class="wrap">Añade o repara el feature en todos los renderers.</td></tr>
+      <tr><td class="wrap">Tools › Easy Outline › Bake Smoothed Normals For Selection</td><td class="wrap">Bakea normales suavizadas (con Undo).</td></tr>
+      <tr><td class="wrap">Tools › Easy Outline › Documentation</td><td class="wrap">Abre la documentación del paquete.</td></tr>
+      <tr><td class="wrap">GameObject › Easy Outline › Add Outline To Selection</td><td class="wrap">Añade <em>Outline Object</em> a la selección.</td></tr>
+      <tr><td class="wrap">GameObject › Easy Outline › Remove Outlines From Selection</td><td class="wrap">Los quita.</td></tr>
+      <tr><td class="wrap">Assets › Easy Outline › Toggle Smoothed Normals On Import</td><td class="wrap">Bakea normales al importar el modelo.</td></tr>
+      <tr><td class="wrap">Assets › Create › Easy Outline › …</td><td class="wrap">Crea perfiles de contorno o de bordes.</td></tr>
+    </tbody>
+  </table>
+<pre><code data-lang="cs">using EasyOutline.Editor;
+
+EasyOutlineSetup.SetUpRenderers();
+List&lt;UniversalRendererData&gt; renderers = EasyOutlineSetup.FindProjectRenderers();
+EasyOutlineFeature feature = EasyOutlineSetup.AddFeature(rendererData);
+SmoothNormalsBaker.BakeForRenderers(selectedRenderers);</code></pre>
+</article>
+
+<!-- =================================================================================== AYUDA -->
+
+<article data-page="problemas" data-title="Solución de problemas" data-group="Ayuda" data-keywords="no se ve nada error build huecos parpadeo faq problemas ayuda">
+  <h1>Solución de problemas</h1>
+  <p class="lead">Los problemas más comunes y cómo arreglarlos en un minuto.</p>
+
+  <details class="faq" open><summary>No se ve ningún contorno</summary><div>
+    <ol>
+      <li><strong>¿Feature en el renderer?</strong> Ejecuta <span class="path">Tools › Easy Outline › Set Up Renderers</span>. Cada nivel de calidad puede usar otro renderer.</li>
+      <li><strong>Unity 6 en modo de compatibilidad.</strong> Desactiva <em>Compatibility Mode</em> en <span class="path">Project Settings › Graphics › URP</span>; la consola lo avisa.</li>
+      <li><strong>Tipo de cámara.</strong> Revisa <em>Camera Types</em> en el feature y el componente <em>Outline Camera</em>.</li>
+      <li><strong>Renderers.</strong> Solo <code>MeshRenderer</code> y <code>SkinnedMeshRenderer</code>.</li>
+      <li><strong>Opacidad 0</strong> o <em>Technique: None</em> sin relleno.</li>
+      <li><strong>Capas:</strong> el renderer debe tener la Rendering Layer y la Outline Layer un perfil.</li>
+    </ol>
+  </div></details>
+  <details class="faq"><summary>Funciona en el Editor pero no en la build</summary><div>
+    <p>Mensaje <em>Shader references are missing</em>: pulsa <strong>Repair</strong> en el Inspector del feature o ejecuta <em>Set Up Renderers</em>. Antes de cada build se reparan automáticamente.</p>
+  </div></details>
+  <details class="faq"><summary>El contorno Fast tiene huecos en las esquinas</summary><div>
+    <p>Faltan normales suavizadas. Ver <a href="#/contorno-fast">Contornos finos (Fast)</a>.</p>
+  </div></details>
+  <details class="faq"><summary>Partes del contorno parpadean o desaparecen</summary><div>
+    <p>Sube <strong>Depth Bias</strong> en el feature. Ocurre con superficies muy lejanas o por diferencias de precisión de profundidad.</p>
+  </div></details>
+  <details class="faq"><summary>El contorno no sigue la animación</summary><div>
+    <p>Cambia <em>Geometry</em> a <strong>Object Depth Pass</strong>. Ver <a href="#/animados">Objetos animados</a>.</p>
+  </div></details>
+  <details class="faq"><summary>Las partes transparentes aparecen en la silueta</summary><div>
+    <p>Activa <strong>Alpha Cutout</strong> en el perfil. Para shaders no estándar usa <em>Object Depth Pass</em>.</p>
+  </div></details>
+  <details class="faq"><summary>El brillo Soft es muy tenue</summary><div>
+    <p><em>Width</em> es el radio, <em>Intensity</em> alarga el brillo y <em>Hardness</em> endurece el borde. En modo <em>Additive</em> el resultado depende del fondo; con HDR y Bloom brilla más.</p>
+  </div></details>
+  <details class="faq"><summary>Hay líneas de más (o de menos) en la detección de bordes</summary><div>
+    <p>Ver <a href="#/bordes/demasiadas-o-pocas-lineas">¿Demasiadas o pocas líneas?</a>.</p>
+  </div></details>
+  <details class="faq"><summary>Wide se ve como Soft</summary><div>
+    <p>La plataforma no admite texturas de coma flotante de dos canales. El Inspector del perfil lo indica.</p>
+  </div></details>
+</article>
+
+<article data-page="rendimiento" data-title="Rendimiento" data-group="Ayuda" data-keywords="rendimiento optimización coste móvil fps memoria">
+  <h1>Rendimiento</h1>
+  <p class="lead">Cinco reglas para que los contornos no cuesten casi nada.</p>
+  <ol class="feature-list">
+    <li><mark>Pocos perfiles:</mark> las pasadas a pantalla completa se pagan por perfil visible, no por objeto.</li>
+    <li><mark>Rendering Layers para muchos objetos:</mark> se dibujan por lotes con el SRP Batcher y el GPU Resident Drawer.</li>
+    <li><mark>En móviles, Fast:</mark> y para Soft, resolución <em>Quarter</em>.</li>
+    <li><mark>Bordes ligeros:</mark> desactiva <em>Normals</em> y <em>Grazing Angle Correction</em> si no los necesitas (te ahorras la pasada depth-normals).</li>
+    <li><mark>Sin basura:</mark> Easy Outline no reserva memoria por frame y reutiliza sus texturas temporales entre perfiles.</li>
+  </ol>
+  <table>
+    <thead><tr><th>Técnica</th><th>Coste por perfil (orientativo)</th></tr></thead>
+    <tbody>
+      <tr><td>Fast</td><td class="wrap">2 draws por objeto, sin pasadas a pantalla completa.</td></tr>
+      <tr><td>Soft</td><td class="wrap">1 draw por objeto + blur H + blur V + composición.</td></tr>
+      <tr><td>Wide</td><td class="wrap">1 draw por objeto + semillas + log₂(grosor)+1 pasos + composición. 8 px a 1080p ≈ 6 pasadas ligeras.</td></tr>
+      <tr><td>Fill</td><td class="wrap">+1 pasada a pantalla completa.</td></tr>
+      <tr><td>Edges</td><td class="wrap">1 pasada con 5–9 lecturas por fuente activa.</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article data-page="plataformas" data-title="Plataformas" data-group="Ayuda" data-keywords="plataformas compatibilidad webgl android ios metal vulkan xr dots verificado">
+  <h1>Plataformas</h1>
+  <p class="lead">Qué está verificado, qué falta por probar y qué no se admite.</p>
+
+  <h2>Verificado</h2>
+  <table>
+    <thead><tr><th>Configuración</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Unity 6000.3 · URP 17.3 · D3D11</td><td class="wrap">43/43 tests, todas las técnicas, ortográfica, MSAA, HDR, render scale y post-procesado.</td></tr>
+      <tr><td class="wrap">Unity 6000.3 + GPU Resident Drawer</td><td class="wrap">Capas, componentes y bordes con variantes DOTS instancing.</td></tr>
+      <tr><td class="wrap">Unity 2022.3.62 · URP 14.0.12 · D3D11</td><td class="wrap">43/43 tests y las mismas pruebas de renderizado.</td></tr>
+      <tr><td class="wrap">Shaders GLES3, Metal, Vulkan</td><td class="wrap">Compilan sin errores en ambos editores.</td></tr>
+    </tbody>
+  </table>
+
+  <figure><img src="assets/img/gpu-resident-drawer.webp" loading="lazy" alt="Render con el GPU Resident Drawer activo"><figcaption>Unity 6 con el GPU Resident Drawer: capas Wide y Fast, componente Soft y bordes.</figcaption></figure>
+
+  <h2>Pendiente de verificar en dispositivo</h2>
+  <ul>
+    <li>Builds de macOS, iOS y WebGL (los shaders compilan para sus APIs).</li>
+    <li>Entities Graphics (DOTS): la ruta por capas usa el mismo mecanismo verificado con el GPU Resident Drawer. <em>Outline Object</em> no funciona con entidades: usa capas.</li>
+    <li>Unity 6.0–6.2: solo usa APIs disponibles desde 6.0, probado en 6.3.</li>
+  </ul>
+
+  <h2>No soportado</h2>
+  <ul>
+    <li>Modo de compatibilidad de Unity 6 (Render Graph desactivado).</li>
+    <li>XR / single-pass instanced.</li>
+    <li>Renderer 2D.</li>
+  </ul>
+
+  <h2>Notas por plataforma</h2>
+  <div class="cards">
+    <div class="card"><strong>Windows · D3D11/12 · Vulkan</strong><span>Todas las técnicas y formatos.</span></div>
+    <div class="card"><strong>macOS · iOS (Metal)</strong><span>Todas las técnicas. En iOS antiguos, prioriza Fast y Soft a <em>Quarter</em>.</span></div>
+    <div class="card"><strong>WebGL 2</strong><span>Wide necesita <code>EXT_color_buffer_float</code>; si falta, se dibuja como Soft.</span></div>
+    <div class="card"><strong>Android · GLES3</strong><span>Igual que WebGL respecto a formatos.</span></div>
+  </div>
+</article>
+
+<article data-page="depuracion" data-title="Depuración" data-group="Ayuda" data-keywords="debug view depuración frame debugger render graph viewer máscara jump flood profundidad normales">
+  <h1>Depuración</h1>
+  <p class="lead">Elige una <mark>Debug View</mark> en el feature (o en <em>Outline Camera</em>) para ver un buffer intermedio. Vuelve a <em>None</em> al terminar.</p>
+  <div class="tabs">
+    <div class="tab-panel" data-tab="Outline Mask"><figure><img src="assets/img/debug-mask.webp" loading="lazy" alt="Debug Outline Mask"><figcaption>Máscara del primer grupo con silueta.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Jump Flood"><figure><img src="assets/img/debug-jfa.webp" loading="lazy" alt="Debug Jump Flood"><figcaption>Distancia a la silueta del primer grupo Wide.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Soft Blur"><figure><img src="assets/img/debug-blur.webp" loading="lazy" alt="Debug Soft Blur"><figcaption>Silueta difuminada del primer grupo Soft.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Depth"><figure><img src="assets/img/debug-depth.webp" loading="lazy" alt="Debug Scene Depth"><figcaption>Profundidad lineal (cerca = blanco).</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Normals"><figure><img src="assets/img/debug-normals.webp" loading="lazy" alt="Debug Scene Normals"><figcaption>Normales en espacio de mundo.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Edges"><figure><img src="assets/img/debug-edges.webp" loading="lazy" alt="Debug Edges"><figcaption>Bordes detectados sobre blanco.</figcaption></figure></div>
+    <div class="tab-panel" data-tab="Sections"><figure><img src="assets/img/debug-sections.webp" loading="lazy" alt="Debug Section Map"><figcaption>IDs de sección y máscara de bordes.</figcaption></figure></div>
+  </div>
+  <p>Para ver el orden de las pasadas usa el <strong>Frame Debugger</strong> (pasadas <em>Easy Outline</em> y <em>Easy Outline Edge Detection</em>) o el <strong>Render Graph Viewer</strong> en Unity 6. En la Demo, <kbd>V</kbd> recorre las vistas.</p>
+</article>
+
+<article data-page="como-funciona" data-title="Cómo funciona" data-group="Ayuda" data-keywords="arquitectura render graph execute recorder estructura paquete añadir técnica">
+  <h1>Cómo funciona</h1>
+  <p class="lead">Para curiosos y para quien quiera ampliar el paquete.</p>
+
+  <h2>Estructura</h2>
+<pre><code data-lang="text">com.easyoutline.urp/
+├── Runtime/
+│   ├── Components/     OutlineObject, OutlineCamera, OutlineSceneSettings
+│   ├── Profiles/       OutlineProfile, EdgeDetectionProfile, enums
+│   ├── Rendering/      Feature, pasadas, recorders, agrupado, formatos
+│   └── Utilities/      Normales suavizadas, Rendering Layers
+├── Shaders/            Object, Composite, EdgeDetection
+├── Editor/             Inspectores, setup de renderers, bakeado, menús
+├── Tests/Editor/       Tests EditMode
+└── Samples~/           Demo y Scripting</code></pre>
+
+  <h2>Un frame</h2>
+<pre><code data-lang="text">AddRenderPasses (por cámara)
+ ├─ OutlinePass.Setup → agrupa capas + componentes por perfil y ordena por prioridad
+ └─ EdgeDetectionPass.Setup → elige perfil y solicita depth / normals / opaque
+
+Record(IOutlineRecorder) — escrito una vez para los dos backends
+ ├─ por grupo: Fast · máscara · Fill · Soft (blur) · Wide (jump flood) · composición
+ └─ vista de depuración opcional</code></pre>
+  <p><code>IOutlineRecorder</code> tiene dos implementaciones: <strong>Render Graph</strong> (Unity 6) y <strong>Execute</strong> (Unity 2022.3, con un pool de texturas reutilizadas entre grupos). El código de dibujo es común.</p>
+
+  <h2>Añadir una técnica</h2>
+  <ol>
+    <li>Añade el valor a <code>OutlineTechnique</code>, sus campos a <code>OutlineProfile</code> y su sección al Inspector.</li>
+    <li>Si necesita la máscara, devuélvelo en <code>RequiresMask</code>.</li>
+    <li>Añade las pasadas al shader y sus índices en <code>ShaderIDs.cs</code>.</li>
+    <li>Escribe <code>RecordX(IOutlineRecorder, …)</code> en <code>OutlinePass</code>. Funciona en ambos backends.</li>
+    <li>Añade un test en <code>RenderingTests</code>.</li>
+  </ol>
+</article>
+
+<article data-page="changelog" data-title="Changelog" data-group="Ayuda" data-keywords="changelog versiones cambios novedades">
+  <h1>Changelog</h1>
+  <p class="lead">Novedades de cada versión.</p>
+  <h2>1.0.0</h2>
+  <h3>Añadido</h3>
+  <ul>
+    <li><code>EasyOutlineFeature</code> con pila de capas por Rendering Layers, componentes <code>OutlineObject</code> y detección de bordes.</li>
+    <li>Técnicas Fast, Soft y Wide, Surface Fill y modos de oclusión.</li>
+    <li><code>EdgeDetectionProfile</code> con profundidad, normales, color, secciones, máscaras, atenuación y distorsión.</li>
+    <li><code>OutlineSceneSettings</code>: capas y bordes por escena sin modificar el renderer.</li>
+    <li>Backends Render Graph (Unity 6) y Execute (Unity 2022.3).</li>
+    <li>Inspectores, configuración de renderers, bakeado de normales y comprobación previa a builds.</li>
+    <li>Escena Demo con 12 expositores visibles en modo edición, muestras de scripting y documentación.</li>
+  </ul>
+  <h3>Corregido</h3>
+  <ul>
+    <li>Los componentes usan el frustum de cada cámara en lugar de <code>Renderer.isVisible</code>.</li>
+    <li>Unity 2022.3: las texturas temporales se reutilizan entre perfiles (mucha menos memoria de vídeo).</li>
+  </ul>
+</article>
+
+        <nav class="pager" id="pager" aria-label="Páginas anterior y siguiente"></nav>
+        <footer class="page-footer">
+          <span>Easy Outline 1.0.0 · Unity URP</span>
+          <span>¿No encuentras algo? Pulsa <kbd>Ctrl</kbd> <kbd>K</kbd></span>
+        </footer>
+      </div>
+
+      <aside class="toc" id="toc" aria-label="En esta página">
+        <p>En esta página</p>
+        <ul id="toc-list"></ul>
+      </aside>
+    </main>
+  </div>
+
+  <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-backdrop"></div>
+    <div class="search-panel">
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search-input" type="search" placeholder="Busca una función, un ajuste o un problema…" autocomplete="off" spellcheck="false" aria-label="Buscar en la documentación">
+        <kbd>Esc</kbd>
+      </div>
+      <div class="search-results" id="search-results"></div>
+      <div class="search-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> moverse</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Esc</kbd> cerrar</span></div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img alt=""></div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
